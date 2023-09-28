@@ -778,11 +778,11 @@ public class Game_Panel extends JPanel
                     }
                 }
 
-                for(int x = 11000; x < 11800; x += Game_Panel.UNIT_SIZE)
+                for(int x = 11000; x < 11900; x += Game_Panel.UNIT_SIZE)
                 {
                     normal_blocks.add(new Normal_Block(offset + x,250,Game_Panel.UNIT_SIZE,Game_Panel.UNIT_SIZE));
                 }
-                for(int x = 11050; x < 11750; x += Game_Panel.UNIT_SIZE)
+                for(int x = 11050; x < 11850; x += Game_Panel.UNIT_SIZE)
                 {
                     normal_blocks.add(new Normal_Block(offset + x,225,Game_Panel.UNIT_SIZE,Game_Panel.UNIT_SIZE));
                 }
