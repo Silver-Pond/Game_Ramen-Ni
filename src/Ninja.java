@@ -744,8 +744,7 @@ public class Ninja
             {
                 for(int c = 0; c < gamePanel.tomoes.size(); c++)
                 {
-                    float positionx = gamePanel.tomoes.get(c).x
-                            , ydiff = gamePanel.tomoes.get(c).y - y;
+                    float ydiff = gamePanel.tomoes.get(c).y - y;
 
                     if(gamePanel.tomoes.get(c).distance > 0 && gamePanel.tomoes.get(c).mad && ydiff <= 125.50 && ydiff >= 0.0)
                     {
@@ -777,7 +776,6 @@ public class Ninja
                         }
                     }
                     gamePanel.tomoes.get(c).hitBox.x = gamePanel.tomoes.get(c).x;
-                    System.out.println("Velocity: "+gamePanel.tomoes.get(c).velocity);
                 }
             }
         }); tomoe_pace.start();

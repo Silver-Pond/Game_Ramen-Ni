@@ -12,8 +12,8 @@ public class Tomoe extends Enemies
     Image tomoe_low_reverse = new ImageIcon("images/Enemies/tomoe_low_reverse.png").getImage();
     Image tomoe_mad_reverse = new ImageIcon("images/Enemies/tomoe_mad_reverse.png").getImage();
     int x,y,width,height,tomoe_animation = 0,distance;
-    double velocity;
-    boolean low,mid,high,mad;
+    double velocity, y_velocity;
+    boolean low,mid,high,mad, falling = true, collide;
     Tomoe(int x,int y,int width,int height)
     {
         this.x = x;
@@ -28,11 +28,43 @@ public class Tomoe extends Enemies
         hitBox.x += velocity;
         x += velocity;
 
-        RegularBlockXCollisionCheck();
+        hitBox.y += y_velocity;
+        y += y_velocity;
 
+        falling = true;
+        //calling methods
+        xRegBlockCollsionCheck();
+        yRegBlockCollisionCheck();
+        yLandCollisionCheck();
+        //falling and fall prevention code
+        if(falling)
+        {
+            y_velocity += 0.3;
+        }
+        else if(!falling && y_velocity > 0)
+        {
+            y_velocity = 0;
+        }
         hitBox.x = x;
+        hitBox.y = y;
     }
-    void RegularBlockXCollisionCheck()
+    private void yLandCollisionCheck()
+    {
+        for(Land land: Game_Panel.landTiles)
+        {
+            if(hitBox.intersects(land.hitBox))
+            {
+                if(y_velocity > 0)
+                {
+                    falling = false;
+                    hitBox.y = land.y - (land.height*2);
+                }
+            }
+            y = hitBox.y;
+            //System.out.println(y_velocity);
+        }
+    }
+    void xRegBlockCollsionCheck()
     {
         for(Normal_Block normal_block: Game_Panel.normal_blocks)
         {
@@ -44,10 +76,25 @@ public class Tomoe extends Enemies
 
                     hitBox.x += Math.signum(velocity);
                 hitBox.x -= Math.signum(velocity);
-                Game_Panel.cameraX -= x - hitBox.x;
                 velocity = 0;
                 hitBox.x = x;
             }
+        }
+    }
+    private void yRegBlockCollisionCheck()
+    {
+        for (Normal_Block normal_block : Game_Panel.normal_blocks)
+        {
+            if (hitBox.intersects(normal_block.hitBox))
+            {
+                if (y_velocity > 0)
+                {
+                    falling = false;
+                    hitBox.y = normal_block.y - (normal_block.height * 2);
+                }
+            }
+            y = hitBox.y;
+            //System.out.println(y_velocity);
         }
     }
     @Override

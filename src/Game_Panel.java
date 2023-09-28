@@ -7,7 +7,7 @@ import java.util.Timer;
 public class Game_Panel extends JPanel
 {
     static final int WIDTH = 900, HEIGHT = 600, UNIT_SIZE = 25;
-    static int offset, cameraX, level = 3;
+    static int offset, cameraX, level = 1;
     static Ninja ninja;
     static Life playerLife = new Life();
     static Ramen_Score ramen_score = new Ramen_Score();
