@@ -1,10 +1,12 @@
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.Random;
 
 public class Random_Box extends Blocks
 {
-    boolean attacked;
+    boolean attacked, box;
     Image randobox = new ImageIcon("images/random_box.png").getImage();
     Random_Box(int x, int y, int width, int height)
     {
@@ -25,7 +27,15 @@ public class Random_Box extends Blocks
             {
                 case 0 ->
                 {
-                    System.out.println("Box!");
+                    Timer boxyMama = new Timer(1500, new ActionListener()
+                    {
+                        @Override
+                        public void actionPerformed(ActionEvent e)
+                        {
+                            box = true;
+                        }
+                    }); boxyMama.start();
+                    box = false;
                 }
                 case 1 ->
                 {
@@ -68,5 +78,13 @@ public class Random_Box extends Blocks
     void drawBlock(Graphics2D g2D)
     {
         g2D.drawImage(randobox,x,y,null);
+
+        if(box)
+        {
+            Font font = new Font("Aerial",Font.BOLD,Font.TRUETYPE_FONT);
+            g2D.setPaint(new Color(120,120,50));
+            g2D.setFont(font);
+            g2D.drawString("BOXY MAMA!", 445,25);
+        }
     }
 }

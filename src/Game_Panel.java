@@ -7,7 +7,7 @@ import java.util.Timer;
 public class Game_Panel extends JPanel
 {
     static final int WIDTH = 900, HEIGHT = 600, UNIT_SIZE = 25;
-    static int offset, cameraX, level = 1;
+    static int offset, cameraX, level = 2;
     static Ninja ninja;
     static Life playerLife = new Life();
     static Ramen_Score ramen_score = new Ramen_Score();
@@ -381,7 +381,7 @@ public class Game_Panel extends JPanel
                 {
                     landTiles.add(new Land(offset + i,300,Game_Panel.UNIT_SIZE,Game_Panel.UNIT_SIZE));
                 }
-                for(int i = 20200; i < 20600; i += UNIT_SIZE)
+                for(int i = 20200; i < 21000; i += UNIT_SIZE)
                 {
                     landTiles.add(new Land(offset + i,500,Game_Panel.UNIT_SIZE,Game_Panel.UNIT_SIZE));
                 }
@@ -849,10 +849,7 @@ public class Game_Panel extends JPanel
                 drop_blocks.add(new Drop_Block(offset + 20000,350,50,25));
             }
             //Level 3
-            case 3 ->
-            {
-                //drop_blocks.add(new Drop_Block(offset + 1000,375,100,25));
-            }
+            case 3 -> {}
             //Level 4
             case 4 ->{}
             //Level 5
@@ -1066,7 +1063,10 @@ public class Game_Panel extends JPanel
                 tomoes.add(new Tomoe(offset + 11450,350,50,50));
             }
             //Level 2
-            case 2 ->{}
+            case 2 ->
+            {
+                tomoes.add(new Tomoe(offset + 7500,425,50,50));
+            }
             //Level 3
             case 3 ->{}
             //Level 4
