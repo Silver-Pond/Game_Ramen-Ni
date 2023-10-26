@@ -1372,6 +1372,29 @@ public class Ninja
             }
         }
     }
+    //Removes enemies that who's x or y value is less than 0.
+    void offscreenEnemies()
+    {
+        for(int i = 0; i < gamePanel.tomoes.size(); i++)
+        {
+            if(gamePanel.tomoes.get(i).y >= 700)
+            {
+                gamePanel.tomoes.remove(i);
+            }
+            if(gamePanel.tomoes.get(i).x < -50)
+            {
+                gamePanel.tomoes.remove(i);
+            }
+        }
+
+        for(int i = 0; i < gamePanel.dirtyBubbles.size(); i++)
+        {
+            if(gamePanel.dirtyBubbles.get(i).x < -50)
+            {
+                gamePanel.dirtyBubbles.remove(i);
+            }
+        }
+    }
     //Draws image.
     protected void draw(Graphics2D g2D)
     {

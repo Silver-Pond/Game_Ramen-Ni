@@ -3,10 +3,12 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.Random;
+import java.util.Timer;
+import java.util.TimerTask;
 
 public class Random_Box extends Blocks
 {
-    boolean attacked, box;
+    boolean attacked;
     Image randobox = new ImageIcon("images/random_box.png").getImage();
     Random_Box(int x, int y, int width, int height)
     {
@@ -27,15 +29,11 @@ public class Random_Box extends Blocks
             {
                 case 0 ->
                 {
-                    Timer boxyMama = new Timer(1500, new ActionListener()
+                    if(Game_Panel.time_limit.seconds > 10)
                     {
-                        @Override
-                        public void actionPerformed(ActionEvent e)
-                        {
-                            box = true;
-                        }
-                    }); boxyMama.start();
-                    box = false;
+                        Game_Panel.time_limit.seconds -= 10;
+                        Game_Panel.time_limit.time -= 10;
+                    }
                 }
                 case 1 ->
                 {
@@ -78,13 +76,5 @@ public class Random_Box extends Blocks
     void drawBlock(Graphics2D g2D)
     {
         g2D.drawImage(randobox,x,y,null);
-
-        if(box)
-        {
-            Font font = new Font("Aerial",Font.BOLD,Font.TRUETYPE_FONT);
-            g2D.setPaint(new Color(120,120,50));
-            g2D.setFont(font);
-            g2D.drawString("BOXY MAMA!", 445,25);
-        }
     }
 }

@@ -32,6 +32,7 @@ public class Tomoe extends Enemies
         y += y_velocity;
 
         falling = true;
+        collide = false;
         //calling methods
         xRegBlockCollsionCheck();
         yRegBlockCollisionCheck();
@@ -64,21 +65,23 @@ public class Tomoe extends Enemies
             //System.out.println(y_velocity);
         }
     }
-    void xRegBlockCollsionCheck()
+    private void xRegBlockCollsionCheck()
     {
         for(Normal_Block normal_block: Game_Panel.normal_blocks)
         {
             if(hitBox.intersects(normal_block.hitBox))
             {
-                hitBox.x -= velocity;
-
-                while(!normal_block.hitBox.intersects(hitBox))
-
-                    hitBox.x += Math.signum(velocity);
-                hitBox.x -= Math.signum(velocity);
-                velocity = 0;
-                hitBox.x = x;
+                if(velocity > 0)
+                {
+                    collide = true;
+                    velocity = 0;
+                } else if (velocity < 0)
+                {
+                    collide = true;
+                    velocity = 0;
+                }
             }
+            x = hitBox.x;
         }
     }
     private void yRegBlockCollisionCheck()

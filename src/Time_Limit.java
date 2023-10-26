@@ -6,7 +6,7 @@ import java.awt.event.ActionListener;
 public class Time_Limit
 {
     Timer timer;
-    int seconds = 59, minutes = 30,time = 1860;
+    int seconds = 59, minutes = 30, time = 1860;
     String seconds_string = String.format("%02d",seconds)
             , minutes_string = String.format("%02d",minutes);
     void Tick()

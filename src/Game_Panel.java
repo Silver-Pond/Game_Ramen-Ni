@@ -7,14 +7,14 @@ import java.util.Timer;
 public class Game_Panel extends JPanel
 {
     static final int WIDTH = 900, HEIGHT = 600, UNIT_SIZE = 25;
-    static int offset, cameraX, level = 2;
+    static int offset, cameraX, level = 1;
     static Ninja ninja;
     static Life playerLife = new Life();
     static Ramen_Score ramen_score = new Ramen_Score();
     static Pause_Menu pause_menu = new Pause_Menu();
     static Break_Screen break_screen = new Break_Screen();
     Timer timer = new Timer();
-    Time_Limit time_limit = new Time_Limit();
+    static Time_Limit time_limit = new Time_Limit();
     ArrayList<Background_Clouds> background_clouds01s = new ArrayList<>();
     ArrayList<Background_Clouds02> background_clouds02s = new ArrayList<>();
     ArrayList<Background_Clouds03> background_clouds03s = new ArrayList<>();
@@ -75,7 +75,7 @@ public class Game_Panel extends JPanel
                     if(ninja.keyBackwards && ninja.key2ndAttack){ninja.actionSet3rd();}
                     if(Crate.keyCrate){ninja.actionPush();}
                     ninja.Set(); ninja.goldenCloudAction(); ninja.blueCloudAction();
-                    ninja.crateAction(); ninja.dropAction();
+                    ninja.crateAction(); ninja.dropAction(); ninja.offscreenEnemies();
                     for(Background_Clouds background_clouds: background_clouds01s){background_clouds.Set(cameraX);}
                     for(Background_Clouds02 background_clouds02: background_clouds02s){background_clouds02.Set(cameraX);}
                     for(Background_Clouds03 background_clouds03: background_clouds03s){background_clouds03.Set(cameraX);}
@@ -259,7 +259,16 @@ public class Game_Panel extends JPanel
             //Level 4
             case 4 ->{}
             //Level 5
-            case 5 ->{}
+            case 5 ->
+            {
+                for(int i = 0; i < WIDTH/UNIT_SIZE; i++)
+                {
+                    for(int a = 525; a < HEIGHT; a += UNIT_SIZE)
+                    {
+                        oceans.add(new Ocean(i * UNIT_SIZE,a,UNIT_SIZE,UNIT_SIZE));
+                    }
+                }
+            }
             //Level 6
             case 6 ->{}
             //Level 7
@@ -363,7 +372,7 @@ public class Game_Panel extends JPanel
                 }
                 for(int i = 13700; i < 14025; i += UNIT_SIZE)
                 {
-                    landTiles.add(new Land(offset + i,225,Game_Panel.UNIT_SIZE,Game_Panel.UNIT_SIZE));
+                    landTiles.add(new Land(offset + i,200,Game_Panel.UNIT_SIZE,Game_Panel.UNIT_SIZE));
                 }
                 for(int i = 15150; i < 16050; i += UNIT_SIZE)
                 {
@@ -429,7 +438,13 @@ public class Game_Panel extends JPanel
                 }
             }
             //Level 2
-            case 2 ->{}
+            case 2 ->
+            {
+                for(int v = 18250; v < 19400; v += 300)
+                {
+                    shrubs.add(new Shrub(offset + v,260,75,43));
+                }
+            }
             //Level 3
             case 3 ->
             {
@@ -465,7 +480,7 @@ public class Game_Panel extends JPanel
                 }
                 for(int x = 13850; x < 14025; x += 300)
                 {
-                    televisions.add(new Television(offset + x,175,61,50));
+                    televisions.add(new Television(offset + x,150,61,50));
                 }
                 for(int x = 17100; x < 17975; x += 200)
                 {
@@ -514,6 +529,18 @@ public class Game_Panel extends JPanel
                 {
                     light_posts.add(new Light_Post(offset + v,175,41,100));
                 }
+                for(int v = 11100; v < 11800; v += 200)
+                {
+                    light_posts.add(new Light_Post(offset + v,300,41,100));
+                }
+                for(int v = 11200; v < 11950; v += 200)
+                {
+                    light_posts.add(new Light_Post(offset + v,125,41,100));
+                }
+                for(int v = 12350; v < 12425; v += 300)
+                {
+                    light_posts.add(new Light_Post(offset + v,200,41,100));
+                }
             }
             //Level 2
             case 2 ->
@@ -560,7 +587,7 @@ public class Game_Panel extends JPanel
                 }
                 for(int v = 13800; v < 14000; v += 200)
                 {
-                    light_posts.add(new Light_Post(offset + v,125,41,100));
+                    light_posts.add(new Light_Post(offset + v,100,41,100));
                 }
                 for(int v = 15250; v < 16050; v += 200)
                 {
@@ -569,6 +596,10 @@ public class Game_Panel extends JPanel
                 for(int v = 17050; v < 17975; v += 200)
                 {
                     light_posts.add(new Light_Post(offset + v,300,41,100));
+                }
+                for(int v = 18200; v < 19400; v += 300)
+                {
+                    light_posts.add(new Light_Post(offset + v,200,41,100));
                 }
             }
             //Level 3
@@ -809,7 +840,13 @@ public class Game_Panel extends JPanel
                 }
             }
             //Level 2
-            case 2 ->{}
+            case 2 ->
+            {
+                /*
+                No blocks in this level.
+                 Just air and chill man.
+                 */
+            }
             //Level 3
             case 3 ->
             {
@@ -951,6 +988,18 @@ public class Game_Panel extends JPanel
             //Level 2
             case 2 ->
             {
+                for(int x = 7100; x < 7250; x += (UNIT_SIZE*2))
+                {
+                    boxes.add(new Box(offset + x,375,50,50));
+                }
+                for(int x = 7150; x < 7300; x += (UNIT_SIZE*2))
+                {
+                    boxes.add(new Box(offset + x,325,50,50));
+                }
+                for(int x = 7200; x < 7300; x += (UNIT_SIZE*2))
+                {
+                    boxes.add(new Box(offset + x,275,50,50));
+                }
                 for(int y = 400; y < 500; y += (UNIT_SIZE*2))
                 {
                     boxes.add(new Box(offset + 10500,y,50,50));
@@ -980,6 +1029,12 @@ public class Game_Panel extends JPanel
     {
         switch (level)
         {
+            //Level 1
+            case 1 ->
+            {
+                random_boxes.add(new Random_Box(offset + 6650, 325, 50, 50));
+                random_boxes.add(new Random_Box(offset + 8625, 125, 50, 50));
+            }
             //Level 2
             case 2 ->
             {
@@ -1005,7 +1060,7 @@ public class Game_Panel extends JPanel
             //Level 1
             case 1 ->{life_blocks.add(new Life_Block(offset + 10250,350,50,50));}
             //Level 2
-            case 2 ->{}
+            case 2 ->{life_blocks.add(new Life_Block(offset + 7250,225,50,50));}
             //Level 3
             case 3 ->{}
             //Level 4
@@ -1066,6 +1121,7 @@ public class Game_Panel extends JPanel
             case 2 ->
             {
                 tomoes.add(new Tomoe(offset + 7500,425,50,50));
+                tomoes.add(new Tomoe(offset + 15750,425,50,50));
             }
             //Level 3
             case 3 ->{}
