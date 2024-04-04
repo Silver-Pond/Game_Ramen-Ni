@@ -15,8 +15,6 @@ public class Level_Finish_Sound extends Soundtracks
             audio = new File("soundtracks/Ramen_Level_Finish.wav");
             audioStream = AudioSystem.getAudioInputStream(audio);
             clip = AudioSystem.getClip();
-            FloatControl gainControl = (FloatControl) clip.getControl(FloatControl.Type.MASTER_GAIN);
-            gainControl.setValue(6.00f);
             clip.open(audioStream);
             clip.start();
         } catch (LineUnavailableException e)

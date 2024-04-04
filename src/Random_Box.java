@@ -29,10 +29,22 @@ public class Random_Box extends Blocks
             {
                 case 0 ->
                 {
-                    if(Game_Panel.time_limit.seconds > 10)
+                    if(Game_Panel.time_limit.seconds > 40)
+                    {
+                        Game_Panel.time_limit.minutes -= 1;
+                        Game_Panel.time_limit.time -= 60;
+                    } else if(Game_Panel.time_limit.seconds > 20)
+                    {
+                        Game_Panel.time_limit.seconds -= 20;
+                        Game_Panel.time_limit.time -= 20;
+                    } else if(Game_Panel.time_limit.seconds > 10)
                     {
                         Game_Panel.time_limit.seconds -= 10;
                         Game_Panel.time_limit.time -= 10;
+                    } else if (Game_Panel.time_limit.seconds < 10 && Game_Panel.time_limit.seconds > 5)
+                    {
+                        Game_Panel.time_limit.seconds -= 5;
+                        Game_Panel.time_limit.time -= 5;
                     }
                 }
                 case 1 ->

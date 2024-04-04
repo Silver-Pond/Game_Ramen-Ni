@@ -67,20 +67,18 @@ public class Ninja
         else if (xSpeed < -5){xSpeed = -5;}
         //x collision checker.
         hitBox.x += xSpeed;
-        landTilesXCollisionCheck(); groundTilesXCollision();
+        landTilesXCollisionCheck(); groundTilesXCollision(); lifeBlockXCollisionCheck();
         redCloudXCollisionCheck(); goldenCloudXCollisionCheck(); blueCloudXCollisionCheck();
-        regBlockXCollisionCheck(); dropBlockXCollisionCheck(); bounceBlockXCollision(); lifeBlockXCollisionCheck();
+        regBlockXCollisionCheck(); dropBlockXCollisionCheck(); bounceBlockXCollision();
         crateXCollisionCheck(); boxXCollisionCheck(); randoBoxXCollisionCheck();
-        dirtyBubbleXCollisionCheck();
-        tomoeXCollisionCheck();
+        dirtyBubbleXCollisionCheck(); tomoeXCollisionCheck();
         //y collision checker.
         hitBox.y += ySpeed;
-        landTilesYCollisionCheck(); groundTilesYCollision();
+        landTilesYCollisionCheck(); groundTilesYCollision(); lifeBlockYCollisionCheck();
         redCloudYCollisionCheck(); goldenCloudYCollisionCheck(); blueCloudYCollisionCheck();
-        regBlockYCollisionCheck(); dropBlockYCollisionCheck(); bounceBlockYCollision(); lifeBlockYCollisionCheck();
+        regBlockYCollisionCheck(); dropBlockYCollisionCheck(); bounceBlockYCollision();
         crateYCollisionCheck(); boxYCollisionCheck(); randoBoxYCollisionCheck();
-        dirtyBubbleYCollisionCheck();
-        tomoeYCollisionCheck();
+        dirtyBubbleYCollisionCheck(); tomoeYCollisionCheck();
 
         signCollisionCheck();
         toriiCollisionCheck();
@@ -565,7 +563,7 @@ public class Ninja
     }
     void goldenCloudAction()
     {
-        for(int i = 0; i < gamePanel.goldenClouds.size(); i++)
+        /*for(int i = 0; i < gamePanel.goldenClouds.size(); i++)
         {
             float yDiff = gamePanel.goldenClouds.get(i).y - this.y
                     , xDiff = gamePanel.goldenClouds.get(i).x - this.x;
@@ -581,6 +579,21 @@ public class Ninja
             }
             gamePanel.goldenClouds.get(i).hitBox.y = gamePanel.goldenClouds.get(i).y;
             //System.out.println("x: "+xDiff+" | y: "+yDiff);
+        }*/
+
+        for(int i = 0; i < gamePanel.goldenClouds.size(); i++)
+        {
+            if(gamePanel.goldenClouds.get(i).touch && gamePanel.goldenClouds.get(i).golden_note < 125)
+            {
+                gamePanel.goldenClouds.get(i).y -= gamePanel.goldenClouds.get(i).golden_velocity;
+                gamePanel.goldenClouds.get(i).golden_note++;
+            }
+            if(!gamePanel.goldenClouds.get(i).touch && gamePanel.goldenClouds.get(i).golden_note == 125 || gamePanel.goldenClouds.get(i).golden_note == 125 && keyDead == true)
+            {
+                gamePanel.goldenClouds.get(i).golden_note = 0;
+            }
+            gamePanel.goldenClouds.get(i).hitBox.y = gamePanel.goldenClouds.get(i).y;
+            //System.out.println("Note: " + gamePanel.goldenClouds.get(i).golden_note + "\nTouch: " + gamePanel.goldenClouds.get(i).touch);
         }
     }
     void blueCloudAction()
@@ -734,6 +747,57 @@ public class Ninja
                 }
             }
         });tomoe_animation.start();
+    }
+    void onikasaAnimation()
+    {
+        javax.swing.Timer onikasa_animation = new javax.swing.Timer(70, new ActionListener()
+        {
+            @Override
+            public void actionPerformed(ActionEvent e)
+            {
+                for(int c = 0; c < gamePanel.onikasa.size(); c++)
+                {
+                    gamePanel.onikasa.get(c).distance = gamePanel.onikasa.get(c).x - gamePanel.ninja.x;
+
+                    if(gamePanel.onikasa.get(c).distance >= 0)
+                    {
+                        gamePanel.onikasa.get(c).onikasa_animation++;
+
+                        if(gamePanel.onikasa.get(c).onikasa_animation <= 3)
+                        {
+                            gamePanel.onikasa.get(c).high = true;
+                            gamePanel.onikasa.get(c).low = false;
+                        } else if(gamePanel.onikasa.get(c).onikasa_animation <= 6)
+                        {
+                            gamePanel.onikasa.get(c).high = true;
+                            gamePanel.onikasa.get(c).low = false;
+                        }
+                        if(gamePanel.onikasa.get(c).onikasa_animation == 8)
+                        {
+                            gamePanel.onikasa.get(c).onikasa_animation = 0;
+                        }
+                    } else if(gamePanel.onikasa.get(c).distance < 0)
+                    {
+                        gamePanel.tomoes.get(c).tomoe_animation++;
+
+                        if(gamePanel.onikasa.get(c).onikasa_animation <= 3)
+                        {
+                            gamePanel.onikasa.get(c).high = true;
+                            gamePanel.onikasa.get(c).low = false;
+                        } else if(gamePanel.onikasa.get(c).onikasa_animation <= 6)
+                        {
+                            gamePanel.onikasa.get(c).high = true;
+                            gamePanel.onikasa.get(c).low = false;
+                        }
+                        if(gamePanel.onikasa.get(c).onikasa_animation == 8)
+                        {
+                            gamePanel.onikasa.get(c).onikasa_animation = 0;
+                        }
+                    }
+                    System.out.println("Distance: "+gamePanel.onikasa.get(c).distance);
+                }
+            }
+        }); onikasa_animation.start();
     }
     void tomoeMovement()
     {
@@ -1350,6 +1414,7 @@ public class Ninja
 
                     hitBox.y += Math.signum(ySpeed);
                 hitBox.y -= Math.signum(ySpeed);
+                goldenCloud.touch = true;
                 ySpeed = 0;
                 y = hitBox.y;
             }

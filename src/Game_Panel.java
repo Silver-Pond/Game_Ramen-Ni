@@ -44,6 +44,8 @@ public class Game_Panel extends JPanel
     ArrayList<Palm_Tree> palm_trees = new ArrayList<>();
     ArrayList<Tori> toris = new ArrayList<>();
     ArrayList<Sign> signs = new ArrayList<>();
+    ArrayList<Onikasa> onikasa = new ArrayList<>();
+
     Game_Panel()
     {
         this.setPreferredSize(new Dimension(WIDTH,HEIGHT));
@@ -100,6 +102,7 @@ public class Game_Panel extends JPanel
                     for(Ramen ramen1: ramen){ramen1.Set(cameraX);}
                     for(DirtyBubble dirtyBubble: dirtyBubbles){dirtyBubble.Set(cameraX);}
                     for(Tomoe tomoe: tomoes){tomoe.Set(cameraX); tomoe.collision();}
+                    for(Onikasa onikasa1: onikasa){onikasa1.Set(cameraX);}
                     repaint();
                 }
             };
@@ -114,6 +117,7 @@ public class Game_Panel extends JPanel
                     ninja.dirtyBubbleMovement();
                     ninja.tomoeAnimation();
                     ninja.tomoeMovement();
+                    ninja.onikasaAnimation();
                     repaint();
                 }
             }, 100L);
@@ -432,7 +436,7 @@ public class Game_Panel extends JPanel
                 {
                     shrubs.add(new Shrub(offset + v,460,75,43));
                 }
-                for(int v = 6250; v < 6950; v += 300)
+                for(int v = 6250; v < 7400; v += 300)
                 {
                     shrubs.add(new Shrub(offset + v,435,75,43));
                 }
@@ -518,13 +522,17 @@ public class Game_Panel extends JPanel
                 {
                     light_posts.add(new Light_Post(offset + v,400,41,100));
                 }
-                for(int v = 6200; v < 6900; v += 300)
+                for(int v = 4650; v < 4975; v += 300)
                 {
-                    light_posts.add(new Light_Post(offset + v,375,41,100));
+                    light_posts.add(new Light_Post(offset + v,75,41,100));
                 }
 
                 light_posts.add(new Light_Post(offset + 5075,200,41,100));
 
+                for(int v = 6200; v < 6900; v += 300)
+                {
+                    light_posts.add(new Light_Post(offset + v,375,41,100));
+                }
                 for(int v = 8175; v < 9025; v += 300)
                 {
                     light_posts.add(new Light_Post(offset + v,175,41,100));
@@ -843,9 +851,9 @@ public class Game_Panel extends JPanel
             case 2 ->
             {
                 /*
-                No blocks in this level.
-                 Just air and chill man.
-                 */
+                    No blocks in this level.
+                    Just air and chill man.
+                */
             }
             //Level 3
             case 3 ->
@@ -1058,19 +1066,40 @@ public class Game_Panel extends JPanel
         switch (level)
         {
             //Level 1
-            case 1 ->{life_blocks.add(new Life_Block(offset + 10250,350,50,50));}
+            case 1 ->
+            {
+                life_blocks.add(new Life_Block(offset + 10250,350,50,50));
+            }
             //Level 2
-            case 2 ->{life_blocks.add(new Life_Block(offset + 7250,225,50,50));}
+            case 2 ->
+            {
+                life_blocks.add(new Life_Block(offset + 7250,225,50,50));
+            }
             //Level 3
-            case 3 ->{}
+            case 3 ->
+            {
+
+            }
             //Level 4
-            case 4 ->{}
+            case 4 ->
+            {
+
+            }
             //Level 5
-            case 5 ->{}
+            case 5 ->
+            {
+
+            }
             //Level 6
-            case 6 ->{}
+            case 6 ->
+            {
+
+            }
             //Level 7
-            case 7 ->{}
+            case 7 ->
+            {
+
+            }
         }
     }
     protected void makeDirtyBubble(int offset)
@@ -1088,6 +1117,7 @@ public class Game_Panel extends JPanel
                 dirtyBubbles.add(new DirtyBubble(offset + 9550,425,50,50));
                 dirtyBubbles.add(new DirtyBubble(offset + 9925,150,50,50));
                 dirtyBubbles.add(new DirtyBubble(offset + 8416,225,50,50));
+                dirtyBubbles.add(new DirtyBubble(offset + 11800,200,50,50));
             }
             //Level 2
             case 2 ->
@@ -1133,6 +1163,17 @@ public class Game_Panel extends JPanel
             case 6 ->{}
             //Level 7
             case 7 ->{}
+        }
+    }
+    protected void makeOnikasa(int offset)
+    {
+        switch (level)
+        {
+            case 3 ->
+            {
+                onikasa.add(new Onikasa(offset + 800, 225,105,150));
+                onikasa.add(new Onikasa(offset + 3200, 325,105,150));
+            }
         }
     }
     protected void makeTorii(int offset)
@@ -1353,6 +1394,7 @@ public class Game_Panel extends JPanel
         for(Random_Box random_box: random_boxes){random_box.drawBlock(g2D);}
         for(Ramen ramen1: ramen){ramen1.draw(g2D);}
         for(DirtyBubble dirtyBubble: dirtyBubbles){dirtyBubble.drawBubble(g2D);}
+        for(Onikasa onikasa1: onikasa){onikasa1.drawBubble(g2D);}
         for(Tomoe tomoe: tomoes){tomoe.drawBubble(g2D);}
         Game_Panel.ninja.draw(g2D);
         for(Game_Over game_over: game_overs){game_over.draw(g2D);}
@@ -1410,7 +1452,7 @@ public class Game_Panel extends JPanel
             redClouds.clear(); goldenClouds.clear(); blueClouds.clear();
             normal_blocks.clear(); drop_blocks.clear(); bounce_blocks.clear(); life_blocks.clear();
             crates.clear(); boxes.clear(); random_boxes.clear();
-            dirtyBubbles.clear(); tomoes.clear();
+            dirtyBubbles.clear(); tomoes.clear(); onikasa.clear();
 
             makeBackground(offset); makeOcean();
             makeLandTiles(offset); makeUndergroundTitles(offset);
@@ -1420,7 +1462,8 @@ public class Game_Panel extends JPanel
             makeRedClouds(offset); makeGoldenClouds(offset); makeBlueCloud(offset);
             makeRegBlocks(offset); makeDropBlock(offset); makeBouceBlocks(offset); makeLifeBlocks(offset);
             makeCrates(offset); makeBox(offset); makeRandoBox(offset);
-            makeDirtyBubble(offset); makeTomoe(offset); soundtracks();
+            makeDirtyBubble(offset); makeTomoe(offset); makeOnikasa(offset);
+            soundtracks();
 
             Game_Panel.playerLife.life--;
         }

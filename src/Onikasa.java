@@ -3,8 +3,8 @@ import java.awt.*;
 
 public class Onikasa extends Enemies
 {
-    Image onikasa_high = new ImageIcon("").getImage();
-    Image onikasa_low = new ImageIcon("").getImage();
+    Image onikasa_high = new ImageIcon("images/Enemies/onikasa_high.png").getImage();
+    Image onikasa_low = new ImageIcon("images/Enemies/onikasa_low.png").getImage();
     int x,y,width,height,onikasa_animation = 0,distance;
     boolean low, high, attack;
     Onikasa(int x,int y,int width,int height)
@@ -27,10 +27,10 @@ public class Onikasa extends Enemies
     @Override
     void drawBubble(Graphics2D g2D)
     {
-        if(low)
+        if(low == true)
         {
             g2D.drawImage(onikasa_low,x,y,null);
-        } else if (high)
+        } else if (high == true)
         {
             g2D.drawImage(onikasa_high,x,y,null);
         }
