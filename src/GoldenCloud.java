@@ -5,7 +5,7 @@ public class GoldenCloud extends Clouds
 {
     Image goldenCloud = new ImageIcon("images/golden cloud.png").getImage();
     int x,y,width,height, golden_note = 0, golden_velocity = 1;
-    boolean touch = false;
+    static boolean touch = false;
     GoldenCloud(int x,int y,int width,int height)
     {
         this.x = x;

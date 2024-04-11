@@ -5,6 +5,7 @@ public class BlueCloud extends Clouds
 {
     Image blueCloud = new ImageIcon("images/blue cloud.png").getImage();
     int x,y,width,height, note = 0, cloudspeed = 1;
+    boolean touch = false;
     BlueCloud(int x,int y,int width,int height)
     {
         this.x = x;

@@ -55,9 +55,13 @@ public class Ninja
         {
             hitBox.y ++;
             landTilesJump();
-            redCloudJump(); goldenCloudJump(); blueCloudJump();
-            regBlockJump(); lifeBlockJump();
-            crateJump(); boxJump();
+            redCloudJump();
+            goldenCloudJump();
+            blueCloudJump();
+            regBlockJump();
+            lifeBlockJump();
+            crateJump();
+            boxJump();
             dropBlockJump();
             hitBox.y --;
         }
@@ -67,18 +71,38 @@ public class Ninja
         else if (xSpeed < -5){xSpeed = -5;}
         //x collision checker.
         hitBox.x += xSpeed;
-        landTilesXCollisionCheck(); groundTilesXCollision(); lifeBlockXCollisionCheck();
-        redCloudXCollisionCheck(); goldenCloudXCollisionCheck(); blueCloudXCollisionCheck();
-        regBlockXCollisionCheck(); dropBlockXCollisionCheck(); bounceBlockXCollision();
-        crateXCollisionCheck(); boxXCollisionCheck(); randoBoxXCollisionCheck();
-        dirtyBubbleXCollisionCheck(); tomoeXCollisionCheck();
+
+        landTilesXCollisionCheck();
+        groundTilesXCollision();
+        lifeBlockXCollisionCheck();
+        redCloudXCollisionCheck();
+        goldenCloudXCollisionCheck();
+        blueCloudXCollisionCheck();
+        regBlockXCollisionCheck();
+        dropBlockXCollisionCheck();
+        bounceBlockXCollision();
+        crateXCollisionCheck();
+        boxXCollisionCheck();
+        randoBoxXCollisionCheck();
+        dirtyBubbleXCollisionCheck();
+        tomoeXCollisionCheck();
         //y collision checker.
         hitBox.y += ySpeed;
-        landTilesYCollisionCheck(); groundTilesYCollision(); lifeBlockYCollisionCheck();
-        redCloudYCollisionCheck(); goldenCloudYCollisionCheck(); blueCloudYCollisionCheck();
-        regBlockYCollisionCheck(); dropBlockYCollisionCheck(); bounceBlockYCollision();
-        crateYCollisionCheck(); boxYCollisionCheck(); randoBoxYCollisionCheck();
-        dirtyBubbleYCollisionCheck(); tomoeYCollisionCheck();
+
+        landTilesYCollisionCheck();
+        groundTilesYCollision();
+        lifeBlockYCollisionCheck();
+        redCloudYCollisionCheck();
+        goldenCloudYCollisionCheck();
+        blueCloudYCollisionCheck();
+        regBlockYCollisionCheck();
+        dropBlockYCollisionCheck();
+        bounceBlockYCollision();
+        crateYCollisionCheck();
+        boxYCollisionCheck();
+        randoBoxYCollisionCheck();
+        dirtyBubbleYCollisionCheck();
+        tomoeYCollisionCheck();
 
         signCollisionCheck();
         toriiCollisionCheck();
@@ -289,7 +313,7 @@ public class Ninja
     {
         if((key2ndAttack && !key1stAttack && keyBackwards))
         {
-            this.x = x-2;
+            this.x = x-1;
             width = this.murasaki_3rdform.getWidth(null);
             height = this.murasaki_3rdform.getHeight(null);
             hitBox.width = width;
@@ -299,7 +323,7 @@ public class Ninja
 
             for(Land land: gamePanel.landTiles)
             {
-                if(hitBox.intersects(land.hitBox)) {ySpeed = -5; /*xSpeed += (-25);*/}
+                if(hitBox.intersects(land.hitBox)) {ySpeed = -5;}
             }
             for(RedCloud redCloud: gamePanel.redClouds)
             {
@@ -518,26 +542,13 @@ public class Ninja
             {
                 for(int drop = 0; drop < gamePanel.drop_blocks.size(); drop++)
                 {
-                    float xiff = gamePanel.drop_blocks.get(drop).x - x
-                            ,yiff = gamePanel.drop_blocks.get(drop).y - y;
-
-                    if((xiff < 25 && xiff > -25) && (yiff < 50.5 && yiff > -1.5))
+                    if(gamePanel.drop_blocks.get(drop).stepped_on)
                     {
-                        gamePanel.drop_blocks.get(drop).stepped_on = true;
                         gamePanel.drop_blocks.get(drop).velocity += 0.3;
-
-                        if(gamePanel.drop_blocks.get(drop).stepped_on == true)
-                        {
-                            gamePanel.drop_blocks.get(drop).hitBox.y += gamePanel.drop_blocks.get(drop).velocity;
-                        }
-                        gamePanel.drop_blocks.get(drop).y = gamePanel.drop_blocks.get(drop).hitBox.y;
+                        gamePanel.drop_blocks.get(drop).hitBox.y += gamePanel.drop_blocks.get(drop).velocity;
                     }
-                    if(!(xiff < 25 && xiff > -25) && (yiff < 50.5 && yiff > -1.5))
-                    {
-                        gamePanel.drop_blocks.get(drop).stepped_on = false;
-                    }
+                    gamePanel.drop_blocks.get(drop).y = gamePanel.drop_blocks.get(drop).hitBox.y;
                     gamePanel.drop_blocks.get(drop).hitBox.y = gamePanel.drop_blocks.get(drop).y;
-                    //System.out.println("x: "+xiff+" || y: "+yiff);
                 }
             }
         }, 13000L);
@@ -558,68 +569,44 @@ public class Ninja
             {
                 Crate.keyCrate = false;
             }
-            //System.out.println("Crate Key: "+keyCrate);
         }
     }
     void goldenCloudAction()
     {
-        /*for(int i = 0; i < gamePanel.goldenClouds.size(); i++)
-        {
-            float yDiff = gamePanel.goldenClouds.get(i).y - this.y
-                    , xDiff = gamePanel.goldenClouds.get(i).x - this.x;
-
-            if(yDiff <= 75.2 && yDiff >= 49.25 && xDiff <= -20.3 && xDiff >= -75.3 && gamePanel.goldenClouds.get(i).golden_note < 125)
-            {
-                gamePanel.goldenClouds.get(i).y -= gamePanel.goldenClouds.get(i).golden_velocity;
-                gamePanel.goldenClouds.get(i).golden_note++;
-            }
-            if(gamePanel.goldenClouds.get(i).golden_note == 125 && xDiff <= -140 && xDiff >= -500 || gamePanel.goldenClouds.get(i).golden_note == 125 && keyDead == true)
-            {
-                gamePanel.goldenClouds.get(i).golden_note = 0;
-            }
-            gamePanel.goldenClouds.get(i).hitBox.y = gamePanel.goldenClouds.get(i).y;
-            //System.out.println("x: "+xDiff+" | y: "+yDiff);
-        }*/
-
         for(int i = 0; i < gamePanel.goldenClouds.size(); i++)
         {
             if(gamePanel.goldenClouds.get(i).touch && gamePanel.goldenClouds.get(i).golden_note < 125)
             {
                 gamePanel.goldenClouds.get(i).y -= gamePanel.goldenClouds.get(i).golden_velocity;
                 gamePanel.goldenClouds.get(i).golden_note++;
+
+                if(keyRight && !(keyLeft))
+                    xSpeed -= 5;
+                else if(keyLeft && !(keyRight))
+                    xSpeed += 5;
             }
             if(!gamePanel.goldenClouds.get(i).touch && gamePanel.goldenClouds.get(i).golden_note == 125 || gamePanel.goldenClouds.get(i).golden_note == 125 && keyDead == true)
             {
                 gamePanel.goldenClouds.get(i).golden_note = 0;
             }
             gamePanel.goldenClouds.get(i).hitBox.y = gamePanel.goldenClouds.get(i).y;
-            //System.out.println("Note: " + gamePanel.goldenClouds.get(i).golden_note + "\nTouch: " + gamePanel.goldenClouds.get(i).touch);
         }
     }
     void blueCloudAction()
     {
         for(int i = 0; i < gamePanel.blueClouds.size(); i++)
         {
-            float yistance = gamePanel.blueClouds.get(i).y - this.y
-                    , xistance = gamePanel.goldenClouds.get(i).x - this.x;
-
-            if((xistance >= -5200.0 && xistance <= -3500) && (yistance >= 49.5 && yistance < 200) && (gamePanel.blueClouds.get(i).note < 1600))
+            if(gamePanel.blueClouds.get(i).touch && gamePanel.blueClouds.get(i).note < 1600)
             {
                 gamePanel.blueClouds.get(i).startX += gamePanel.blueClouds.get(i).cloudspeed;
-                xSpeed += gamePanel.blueClouds.get(i).cloudspeed;
+                gamePanel.cameraX -= gamePanel.blueClouds.get(i).cloudspeed;
                 gamePanel.blueClouds.get(i).note++;
-                keyBlueCloud = true;
             }
-            if(gamePanel.blueClouds.get(i).note == 1600)
-            {
-                keyBlueCloud = false;
-            }
-            if((gamePanel.blueClouds.get(i).note == 1600 && xistance >= -5220.25 &&  xistance <= -5320.45) || (gamePanel.blueClouds.get(i).note == 1600 && keyDead == true))
+            if(!gamePanel.blueClouds.get(i).touch && gamePanel.blueClouds.get(i).note == 1600)
             {
                 gamePanel.blueClouds.get(i).note = 0;
             }
             gamePanel.blueClouds.get(i).hitBox.x = gamePanel.blueClouds.get(i).startX;
-            //System.out.println("xistance: "+xistance+" yistance: "+yistance+" note: "+gamePanel.blueClouds.get(i).note+" key: "+keyBlueCloud);
         }
     }
     void dirtyBubbleAnimation()
@@ -646,7 +633,6 @@ public class Ninja
                     {
                         gamePanel.dirtyBubbles.get(c).bubble_animation = 0;
                     }
-                    //System.out.println("Animation: "+gamePanel.dirtyBubbles.get(c).bubble_animation);
                 }
             }
         }); bubble_animation.start();
@@ -743,61 +729,9 @@ public class Ninja
                             }
                         }
                     }
-                    //System.out.println("Distance: "+gamePanel.tomoes.get(c).distance);
                 }
             }
         });tomoe_animation.start();
-    }
-    void onikasaAnimation()
-    {
-        javax.swing.Timer onikasa_animation = new javax.swing.Timer(70, new ActionListener()
-        {
-            @Override
-            public void actionPerformed(ActionEvent e)
-            {
-                for(int c = 0; c < gamePanel.onikasa.size(); c++)
-                {
-                    gamePanel.onikasa.get(c).distance = gamePanel.onikasa.get(c).x - gamePanel.ninja.x;
-
-                    if(gamePanel.onikasa.get(c).distance >= 0)
-                    {
-                        gamePanel.onikasa.get(c).onikasa_animation++;
-
-                        if(gamePanel.onikasa.get(c).onikasa_animation <= 3)
-                        {
-                            gamePanel.onikasa.get(c).high = true;
-                            gamePanel.onikasa.get(c).low = false;
-                        } else if(gamePanel.onikasa.get(c).onikasa_animation <= 6)
-                        {
-                            gamePanel.onikasa.get(c).high = true;
-                            gamePanel.onikasa.get(c).low = false;
-                        }
-                        if(gamePanel.onikasa.get(c).onikasa_animation == 8)
-                        {
-                            gamePanel.onikasa.get(c).onikasa_animation = 0;
-                        }
-                    } else if(gamePanel.onikasa.get(c).distance < 0)
-                    {
-                        gamePanel.tomoes.get(c).tomoe_animation++;
-
-                        if(gamePanel.onikasa.get(c).onikasa_animation <= 3)
-                        {
-                            gamePanel.onikasa.get(c).high = true;
-                            gamePanel.onikasa.get(c).low = false;
-                        } else if(gamePanel.onikasa.get(c).onikasa_animation <= 6)
-                        {
-                            gamePanel.onikasa.get(c).high = true;
-                            gamePanel.onikasa.get(c).low = false;
-                        }
-                        if(gamePanel.onikasa.get(c).onikasa_animation == 8)
-                        {
-                            gamePanel.onikasa.get(c).onikasa_animation = 0;
-                        }
-                    }
-                    System.out.println("Distance: "+gamePanel.onikasa.get(c).distance);
-                }
-            }
-        }); onikasa_animation.start();
     }
     void tomoeMovement()
     {
@@ -868,7 +802,6 @@ public class Ninja
                         gamePanel.dirtyBubbles.get(c).bubble_tracker = 0;
                     }
                     gamePanel.dirtyBubbles.get(c).hitBox.x = gamePanel.dirtyBubbles.get(c).x;
-                    //System.out.println("Tracker: "+gamePanel.dirtyBubbles.get(c).bubble_tracker+": Note: "+gamePanel.dirtyBubbles.get(c).bubble_note);
                 }
             }
         }); bubble_pace.start();
@@ -1295,7 +1228,7 @@ public class Ninja
 
                     hitBox.y += Math.signum(ySpeed);
                 hitBox.y -= Math.signum(ySpeed);
-                ySpeed -= 15;
+                ySpeed = -15;
                 y = hitBox.y;
             }
         }
@@ -1380,6 +1313,7 @@ public class Ninja
 
                     hitBox.y += Math.signum(ySpeed);
                 hitBox.y -= Math.signum(ySpeed);
+                drop_block.stepped_on = true;
                 ySpeed = 0;
                 y = hitBox.y;
             }
@@ -1432,6 +1366,7 @@ public class Ninja
 
                     hitBox.y += Math.signum(ySpeed);
                 hitBox.y -= Math.signum(ySpeed);
+                blueCloud.touch = true;
                 ySpeed = 0;
                 y = hitBox.y;
             }

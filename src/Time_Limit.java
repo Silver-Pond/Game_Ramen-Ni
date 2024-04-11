@@ -34,7 +34,6 @@ public class Time_Limit
                         }
                         seconds_string = String.format("%02d",seconds);
                         minutes_string = String.format("%02d",minutes);
-                        //System.out.println("Time: "+minutes_string+":"+seconds_string);
                     }
                 }
             }); timer.start();

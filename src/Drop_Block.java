@@ -4,7 +4,6 @@ public class Drop_Block extends Blocks
 {
     boolean stepped_on;
     double velocity = 0;
-    int count = 0;
     Drop_Block(int x, int y, int width, int height)
     {
         this.x = x;

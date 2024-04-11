@@ -7,7 +7,7 @@ import java.util.Timer;
 public class Game_Panel extends JPanel
 {
     static final int WIDTH = 900, HEIGHT = 600, UNIT_SIZE = 25;
-    static int offset, cameraX, level = 1;
+    static int offset, cameraX, level = 2;
     static Ninja ninja;
     static Life playerLife = new Life();
     static Ramen_Score ramen_score = new Ramen_Score();
@@ -44,7 +44,6 @@ public class Game_Panel extends JPanel
     ArrayList<Palm_Tree> palm_trees = new ArrayList<>();
     ArrayList<Tori> toris = new ArrayList<>();
     ArrayList<Sign> signs = new ArrayList<>();
-    ArrayList<Onikasa> onikasa = new ArrayList<>();
 
     Game_Panel()
     {
@@ -102,7 +101,6 @@ public class Game_Panel extends JPanel
                     for(Ramen ramen1: ramen){ramen1.Set(cameraX);}
                     for(DirtyBubble dirtyBubble: dirtyBubbles){dirtyBubble.Set(cameraX);}
                     for(Tomoe tomoe: tomoes){tomoe.Set(cameraX); tomoe.collision();}
-                    for(Onikasa onikasa1: onikasa){onikasa1.Set(cameraX);}
                     repaint();
                 }
             };
@@ -117,7 +115,6 @@ public class Game_Panel extends JPanel
                     ninja.dirtyBubbleMovement();
                     ninja.tomoeAnimation();
                     ninja.tomoeMovement();
-                    ninja.onikasaAnimation();
                     repaint();
                 }
             }, 100L);
@@ -1117,11 +1114,12 @@ public class Game_Panel extends JPanel
                 dirtyBubbles.add(new DirtyBubble(offset + 9550,425,50,50));
                 dirtyBubbles.add(new DirtyBubble(offset + 9925,150,50,50));
                 dirtyBubbles.add(new DirtyBubble(offset + 8416,225,50,50));
-                dirtyBubbles.add(new DirtyBubble(offset + 11800,200,50,50));
+                dirtyBubbles.add(new DirtyBubble(offset + 11800,175,50,50));
             }
             //Level 2
             case 2 ->
             {
+                dirtyBubbles.add(new DirtyBubble(offset + 11800,450,50,50));
                 dirtyBubbles.add(new DirtyBubble(offset + 12575,400,50,50));
                 dirtyBubbles.add(new DirtyBubble(offset + 13075,350,50,50));
             }
@@ -1151,6 +1149,7 @@ public class Game_Panel extends JPanel
             case 2 ->
             {
                 tomoes.add(new Tomoe(offset + 7500,425,50,50));
+                tomoes.add(new Tomoe(offset + 9400,275,50,50));
                 tomoes.add(new Tomoe(offset + 15750,425,50,50));
             }
             //Level 3
@@ -1163,17 +1162,6 @@ public class Game_Panel extends JPanel
             case 6 ->{}
             //Level 7
             case 7 ->{}
-        }
-    }
-    protected void makeOnikasa(int offset)
-    {
-        switch (level)
-        {
-            case 3 ->
-            {
-                onikasa.add(new Onikasa(offset + 800, 225,105,150));
-                onikasa.add(new Onikasa(offset + 3200, 325,105,150));
-            }
         }
     }
     protected void makeTorii(int offset)
@@ -1394,7 +1382,6 @@ public class Game_Panel extends JPanel
         for(Random_Box random_box: random_boxes){random_box.drawBlock(g2D);}
         for(Ramen ramen1: ramen){ramen1.draw(g2D);}
         for(DirtyBubble dirtyBubble: dirtyBubbles){dirtyBubble.drawBubble(g2D);}
-        for(Onikasa onikasa1: onikasa){onikasa1.drawBubble(g2D);}
         for(Tomoe tomoe: tomoes){tomoe.drawBubble(g2D);}
         Game_Panel.ninja.draw(g2D);
         for(Game_Over game_over: game_overs){game_over.draw(g2D);}
@@ -1443,26 +1430,60 @@ public class Game_Panel extends JPanel
                 Main.world03Theme.clip.stop();
                 Main.world03Theme.clip.close();
             }
-
-            background_clouds01s.clear(); background_clouds02s.clear(); background_clouds03s.clear();
-            lifeIcons.clear(); ramen_icons.clear();
-            oceans.clear(); landTiles.clear(); groundTiles.clear();
-            shrubs.clear(); televisions.clear(); light_posts.clear(); palm_trees.clear();
-            signs.clear(); toris.clear(); ramen.clear();
-            redClouds.clear(); goldenClouds.clear(); blueClouds.clear();
-            normal_blocks.clear(); drop_blocks.clear(); bounce_blocks.clear(); life_blocks.clear();
-            crates.clear(); boxes.clear(); random_boxes.clear();
-            dirtyBubbles.clear(); tomoes.clear(); onikasa.clear();
-
-            makeBackground(offset); makeOcean();
-            makeLandTiles(offset); makeUndergroundTitles(offset);
-            makeLifeIcon(); makeRamenIcon();
-            makeShrubs(offset); makeTelevision(offset); makeRamen(offset); makeLightPosts(offset);
-            makeSign(offset); makeTorii(offset); makePalmTrees(offset);
-            makeRedClouds(offset); makeGoldenClouds(offset); makeBlueCloud(offset);
-            makeRegBlocks(offset); makeDropBlock(offset); makeBouceBlocks(offset); makeLifeBlocks(offset);
-            makeCrates(offset); makeBox(offset); makeRandoBox(offset);
-            makeDirtyBubble(offset); makeTomoe(offset); makeOnikasa(offset);
+            //Clear ArrayLists
+            background_clouds01s.clear();
+            background_clouds02s.clear();
+            background_clouds03s.clear();
+            lifeIcons.clear();
+            ramen_icons.clear();
+            oceans.clear();
+            landTiles.clear();
+            groundTiles.clear();
+            shrubs.clear();
+            televisions.clear();
+            light_posts.clear();
+            palm_trees.clear();
+            signs.clear();
+            toris.clear();
+            ramen.clear();
+            redClouds.clear();
+            goldenClouds.clear();
+            blueClouds.clear();
+            normal_blocks.clear();
+            drop_blocks.clear();
+            bounce_blocks.clear();
+            life_blocks.clear();
+            crates.clear();
+            boxes.clear();
+            random_boxes.clear();
+            dirtyBubbles.clear();
+            tomoes.clear();
+            //Reset objects and enemies.
+            makeBackground(offset);
+            makeOcean();
+            makeLandTiles(offset);
+            makeUndergroundTitles(offset);
+            makeLifeIcon();
+            makeRamenIcon();
+            makeShrubs(offset);
+            makeTelevision(offset);
+            makeRamen(offset);
+            makeLightPosts(offset);
+            makeSign(offset);
+            makeTorii(offset);
+            makePalmTrees(offset);
+            makeRedClouds(offset);
+            makeGoldenClouds(offset);
+            makeBlueCloud(offset);
+            makeRegBlocks(offset);
+            makeDropBlock(offset);
+            makeBouceBlocks(offset);
+            makeLifeBlocks(offset);
+            makeCrates(offset);
+            makeBox(offset);
+            makeRandoBox(offset);
+            makeDirtyBubble(offset);
+            makeTomoe(offset);
             soundtracks();
 
             Game_Panel.playerLife.life--;
