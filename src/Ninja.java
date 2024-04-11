@@ -585,7 +585,7 @@ public class Ninja
                 else if(keyLeft && !(keyRight))
                     xSpeed += 5;
             }
-            if(!gamePanel.goldenClouds.get(i).touch && gamePanel.goldenClouds.get(i).golden_note == 125 || gamePanel.goldenClouds.get(i).golden_note == 125 && keyDead == true)
+            if(!gamePanel.goldenClouds.get(i).touch && gamePanel.goldenClouds.get(i).golden_note == 125 && keyDead == true)
             {
                 gamePanel.goldenClouds.get(i).golden_note = 0;
             }
@@ -1340,6 +1340,8 @@ public class Ninja
     {
         for(GoldenCloud goldenCloud: gamePanel.goldenClouds)
         {
+            goldenCloud.touch = false;
+
             if(hitBox.intersects(goldenCloud.hitBox))
             {
                 hitBox.y -= ySpeed;

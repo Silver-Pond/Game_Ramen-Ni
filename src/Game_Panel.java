@@ -1122,6 +1122,7 @@ public class Game_Panel extends JPanel
                 dirtyBubbles.add(new DirtyBubble(offset + 11800,450,50,50));
                 dirtyBubbles.add(new DirtyBubble(offset + 12575,400,50,50));
                 dirtyBubbles.add(new DirtyBubble(offset + 13075,350,50,50));
+                dirtyBubbles.add(new DirtyBubble(offset + 17900,350,50,50));
             }
             //Level 3
             case 3 ->{}
