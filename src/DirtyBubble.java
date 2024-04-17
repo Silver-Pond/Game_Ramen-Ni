@@ -15,7 +15,7 @@ public class DirtyBubble extends Enemies
     Image dirtyBubbleV2Reverse = new ImageIcon("images/Enemies/Dirty_Bubble_V2_Open Rverse.png").getImage();
     Image dirtyBubbleV2ClosedReverse = new ImageIcon("images/Enemies/Dirty_Bubble_V2_Closed Reverse.png").getImage();
     int x,y,width,height, bubble_tracker = 0, bubble_note = 150, bubble_animation = 0, bubble_velocity = 1;
-    boolean open = true,closed;
+    boolean open = true, closed;
     DirtyBubble(int x,int y,int width,int height)
     {
         this.x = x;

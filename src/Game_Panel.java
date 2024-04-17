@@ -25,6 +25,7 @@ public class Game_Panel extends JPanel
     ArrayList<Life_Icon> lifeIcons = new ArrayList<>();
     ArrayList<DirtyBubble> dirtyBubbles = new ArrayList<>();
     ArrayList<Tomoe> tomoes = new ArrayList<>();
+    ArrayList<Bakujin> bakujin = new ArrayList();
     ArrayList<Game_Over> game_overs = new ArrayList<>();
     ArrayList<Times_Up> times_ups = new ArrayList<>();
     ArrayList<Ramen> ramen = new ArrayList<>();
@@ -1152,6 +1153,27 @@ public class Game_Panel extends JPanel
                 tomoes.add(new Tomoe(offset + 7500,425,50,50));
                 tomoes.add(new Tomoe(offset + 9400,275,50,50));
                 tomoes.add(new Tomoe(offset + 15750,425,50,50));
+            }
+            //Level 3
+            case 3 ->{}
+            //Level 4
+            case 4 ->{}
+            //Level 5
+            case 5 ->{}
+            //Level 6
+            case 6 ->{}
+            //Level 7
+            case 7 ->{}
+        }
+    }
+    protected  void makeBakujin(int offset)
+    {
+        switch (level)
+        {
+            //Level 2
+            case 2 ->
+            {
+
             }
             //Level 3
             case 3 ->{}
