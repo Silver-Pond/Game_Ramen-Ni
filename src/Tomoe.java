@@ -62,7 +62,6 @@ public class Tomoe extends Enemies
                 }
             }
             y = hitBox.y;
-            //System.out.println(y_velocity);
         }
     }
     private void xRegBlockCollsionCheck()
@@ -97,7 +96,6 @@ public class Tomoe extends Enemies
                 }
             }
             y = hitBox.y;
-            //System.out.println(y_velocity);
         }
     }
     @Override

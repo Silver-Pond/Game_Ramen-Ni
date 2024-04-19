@@ -7,7 +7,7 @@ import java.util.TimerTask;
 
 public class Ninja
 {
-    boolean keyForwards = true, keyBackwards, keyLeft, keyRight, key2ndAttack, key1stAttack, keyJump, keyDead, keyCamera, keyBlueCloud, keyTomoeDead;
+    boolean keyForwards = true, keyBackwards, keyLeft, keyRight, key2ndAttack, key1stAttack, keyJump, keyDead, keyCamera, keyBlueCloud, keyTomoeDead, keyDirtyBubble, keyBakujin;
     Image murasaki = new ImageIcon("images/kuroimaru san.png").getImage();
     Image murasaki_dead = new ImageIcon("images/kuroimaru san dead.png").getImage();
     Image murasaki_running = new ImageIcon("images/kuroimaru san running.png").getImage();
@@ -62,6 +62,7 @@ public class Ninja
             lifeBlockJump();
             crateJump();
             boxJump();
+            randomBoxJump();
             dropBlockJump();
             hitBox.y --;
         }
@@ -69,6 +70,7 @@ public class Ninja
         //speed limiter.
         if(xSpeed > 5){xSpeed = 5;}
         else if (xSpeed < -5){xSpeed = -5;}
+
         //x collision checker.
         hitBox.x += xSpeed;
 
@@ -86,6 +88,8 @@ public class Ninja
         randoBoxXCollisionCheck();
         dirtyBubbleXCollisionCheck();
         tomoeXCollisionCheck();
+        bakujinXCollisionCheck();
+
         //y collision checker.
         hitBox.y += ySpeed;
 
@@ -103,6 +107,7 @@ public class Ninja
         randoBoxYCollisionCheck();
         dirtyBubbleYCollisionCheck();
         tomoeYCollisionCheck();
+        bakujinYCollisionCheck();
 
         signCollisionCheck();
         toriiCollisionCheck();
@@ -168,15 +173,37 @@ public class Ninja
             hitBox.width = width;
             hitBox.height = height;
 
+            //M0NST3R S3CT10N B3G1NS
             for(int n = 0; n < gamePanel.dirtyBubbles.size(); n++)
             {
-                DirtyBubble dirtyBubble = new DirtyBubble(gamePanel.dirtyBubbles.get(n).x,gamePanel.dirtyBubbles.get(n).y,gamePanel.dirtyBubbles.get(n).width,gamePanel.dirtyBubbles.get(n).height);
-                if(hitBox.intersects(dirtyBubble.hitBox))
+                if(hitBox.intersects(gamePanel.dirtyBubbles.get(n).hitBox))
                 {
                     Main.ras.Audio();
+                    keyDirtyBubble = true;
                     gamePanel.dirtyBubbles.remove(n);
                 }
             }
+            for(int n = 0; n < gamePanel.tomoes.size(); n++)
+            {
+                if(hitBox.intersects(gamePanel.tomoes.get(n).hitBox))
+                {
+                    Main.ras.Audio();
+                    keyTomoeDead = true;
+                    gamePanel.tomoes.remove(n);
+                }
+            }
+            for(int n = 0; n < gamePanel.bakujin.size(); n++)
+            {
+                if(hitBox.intersects(gamePanel.bakujin.get(n).hitBox))
+                {
+                    Main.ras.Audio();
+                    keyBakujin = true;
+                    gamePanel.bakujin.remove(n);
+                }
+            }
+            //M0NST3R S3CT10N 3NDS
+
+            //0BJ3CT S3CT10N B3G1NS
             for(int n = 0; n < gamePanel.life_blocks.size(); n++)
             {
                 if(hitBox.intersects(gamePanel.life_blocks.get(n).hitBox) && key1stAttack)
@@ -195,15 +222,6 @@ public class Ninja
                 if(hitBox.intersects(gamePanel.crates.get(n).hitBox) && key1stAttack)
                 {
                     Crate.keyCrate = false;
-                }
-            }
-            for(int n = 0; n < gamePanel.tomoes.size(); n++)
-            {
-                if(hitBox.intersects(gamePanel.tomoes.get(n).hitBox))
-                {
-                    Main.ras.Audio();
-                    keyTomoeDead = true;
-                    gamePanel.tomoes.remove(n);
                 }
             }
             for(int x = 0; x < gamePanel.random_boxes.size(); x++)
@@ -258,15 +276,37 @@ public class Ninja
             {
                 if(hitBox.intersects(bounce_block.hitBox)) {ySpeed -= 5;}
             }
+            //M0NST3R S3CT10N B3G1NS
             for(int n = 0; n < gamePanel.dirtyBubbles.size(); n++)
             {
-                DirtyBubble dirtyBubble = new DirtyBubble(gamePanel.dirtyBubbles.get(n).x,gamePanel.dirtyBubbles.get(n).y,gamePanel.dirtyBubbles.get(n).width,gamePanel.dirtyBubbles.get(n).height);
-                if(hitBox.intersects(dirtyBubble.hitBox))
+                if(hitBox.intersects(gamePanel.dirtyBubbles.get(n).hitBox))
                 {
                     Main.ras.Audio();
+                    keyDirtyBubble = true;
                     gamePanel.dirtyBubbles.remove(n);
                 }
             }
+            for(int n = 0; n < gamePanel.tomoes.size(); n++)
+            {
+                if(hitBox.intersects(gamePanel.tomoes.get(n).hitBox))
+                {
+                    Main.ras.Audio();
+                    keyTomoeDead = true;
+                    gamePanel.tomoes.remove(n);
+                }
+            }
+            for(int n = 0; n < gamePanel.bakujin.size(); n++)
+            {
+                if(hitBox.intersects(gamePanel.bakujin.get(n).hitBox))
+                {
+                    Main.ras.Audio();
+                    keyBakujin = true;
+                    gamePanel.bakujin.remove(n);
+                }
+            }
+            //M0NST3R S3CT10N 3NDS
+
+            //0BJ3CT S3CT10N B3G1NS
             for(int n = 0; n < gamePanel.life_blocks.size(); n++)
             {
                 if(hitBox.intersects(gamePanel.life_blocks.get(n).hitBox) && key2ndAttack)
@@ -284,15 +324,7 @@ public class Ninja
             {
                 if(box.hitBox.intersects(hitBox)){ySpeed = -5;}
             }
-            for(int n = 0; n < gamePanel.tomoes.size(); n++)
-            {
-                if(hitBox.intersects(gamePanel.tomoes.get(n).hitBox))
-                {
-                    Main.ras.Audio();
-                    keyTomoeDead = true;
-                    gamePanel.tomoes.remove(n);
-                }
-            }
+
             for(int x = 0; x < gamePanel.random_boxes.size(); x++)
             {
                 if(hitBox.intersects(gamePanel.random_boxes.get(x).hitBox))
@@ -313,7 +345,7 @@ public class Ninja
     {
         if((key2ndAttack && !key1stAttack && keyBackwards))
         {
-            this.x = x-1;
+            this.x = x;
             width = this.murasaki_3rdform.getWidth(null);
             height = this.murasaki_3rdform.getHeight(null);
             hitBox.width = width;
@@ -349,15 +381,37 @@ public class Ninja
             {
                 if(hitBox.intersects(bounce_block.hitBox)) {ySpeed -= 5;}
             }
+            //M0NST3R S3CT10N B3G1NS
             for(int n = 0; n < gamePanel.dirtyBubbles.size(); n++)
             {
-                DirtyBubble dirtyBubble = new DirtyBubble(gamePanel.dirtyBubbles.get(n).x,gamePanel.dirtyBubbles.get(n).y,gamePanel.dirtyBubbles.get(n).width,gamePanel.dirtyBubbles.get(n).height);
-                if(hitBox.intersects(dirtyBubble.hitBox))
+                if(hitBox.intersects(gamePanel.dirtyBubbles.get(n).hitBox))
                 {
                     Main.ras.Audio();
+                    keyDirtyBubble = true;
                     gamePanel.dirtyBubbles.remove(n);
                 }
             }
+            for(int n = 0; n < gamePanel.tomoes.size(); n++)
+            {
+                if(hitBox.intersects(gamePanel.tomoes.get(n).hitBox))
+                {
+                    Main.ras.Audio();
+                    keyTomoeDead = true;
+                    gamePanel.tomoes.remove(n);
+                }
+            }
+            for(int n = 0; n < gamePanel.bakujin.size(); n++)
+            {
+                if(hitBox.intersects(gamePanel.bakujin.get(n).hitBox))
+                {
+                    Main.ras.Audio();
+                    keyBakujin = true;
+                    gamePanel.bakujin.remove(n);
+                }
+            }
+            //M0NST3R S3CT10N 3NDS
+
+            //0BJ3CT S3CT10N B3G1NS
             for(int n = 0; n < gamePanel.life_blocks.size(); n++)
             {
                 if(hitBox.intersects(gamePanel.life_blocks.get(n).hitBox) && key2ndAttack)
@@ -374,15 +428,6 @@ public class Ninja
             for(Box box: gamePanel.boxes)
             {
                 if(box.hitBox.intersects(hitBox)){ySpeed = -5;}
-            }
-            for(int n = 0; n < gamePanel.tomoes.size(); n++)
-            {
-                if(hitBox.intersects(gamePanel.tomoes.get(n).hitBox))
-                {
-                    Main.ras.Audio();
-                    keyTomoeDead = true;
-                    gamePanel.tomoes.remove(n);
-                }
             }
             for(int x = 0; x < gamePanel.random_boxes.size(); x++)
             {
@@ -458,56 +503,72 @@ public class Ninja
     {
         for(Land land: gamePanel.landTiles)
         {
-            if(land.hitBox.intersects(hitBox)){ySpeed = -8;}
+            if(land.hitBox.intersects(hitBox))
+                ySpeed = -8;
         }
     }
     void redCloudJump()
     {
             for(RedCloud redCloud: gamePanel.redClouds)
             {
-                if(redCloud.hitBox.intersects(hitBox)) {ySpeed = -8;}
+                if(redCloud.hitBox.intersects(hitBox))
+                    ySpeed = -8;
             }
     }
     void goldenCloudJump()
     {
         for(GoldenCloud goldenCloud: gamePanel.goldenClouds)
         {
-            if(goldenCloud.hitBox.intersects(hitBox)) {ySpeed = -8;}
+            if(goldenCloud.hitBox.intersects(hitBox))
+                ySpeed = -8;
         }
     }
     void blueCloudJump()
     {
         for(BlueCloud blueCloud: gamePanel.blueClouds)
         {
-            if(blueCloud.hitBox.intersects(hitBox)) {ySpeed = -8;}
+            if(blueCloud.hitBox.intersects(hitBox))
+                ySpeed = -8;
         }
     }
     void regBlockJump()
     {
         for(Normal_Block normal_block: gamePanel.normal_blocks)
         {
-            if(normal_block.hitBox.intersects(hitBox)) {ySpeed = -8;}
+            if(normal_block.hitBox.intersects(hitBox))
+                ySpeed = -8;
         }
     }
     void lifeBlockJump()
     {
         for(Life_Block life_block: gamePanel.life_blocks)
         {
-            if (life_block.hitBox.intersects(hitBox)) {ySpeed = -8;}
+            if (life_block.hitBox.intersects(hitBox))
+                ySpeed = -8;
         }
     }
     void crateJump()
     {
         for(Crate crate: gamePanel.crates)
         {
-            if(crate.hitBox.intersects(hitBox)) {ySpeed = -8;}
+            if(crate.hitBox.intersects(hitBox))
+                ySpeed = -8;
         }
     }
     void boxJump()
     {
         for(Box box: gamePanel.boxes)
         {
-            if(box.hitBox.intersects(hitBox)){ySpeed = -8;}
+            if(box.hitBox.intersects(hitBox))
+                ySpeed = -8;
+        }
+    }
+    void randomBoxJump()
+    {
+        for(Random_Box random_box: gamePanel.random_boxes)
+        {
+            if(random_box.hitBox.intersects(hitBox))
+                ySpeed = -8;
         }
     }
     void dropBlockJump()
@@ -515,9 +576,7 @@ public class Ninja
         for(Drop_Block drop_block: gamePanel.drop_blocks)
         {
             if (drop_block.hitBox.intersects(hitBox))
-            {
                 ySpeed = -8;
-            }
         }
     }
     void signCollisionCheck()
@@ -806,6 +865,36 @@ public class Ninja
             }
         }); bubble_pace.start();
     }
+    void bakujinMovement()
+    {
+        javax.swing.Timer bakujin_pace = new javax.swing.Timer(15, new ActionListener()
+        {
+            @Override
+            public void actionPerformed(ActionEvent e)
+            {
+                for(int c = 0; c < gamePanel.bakujin.size(); c++)
+                {
+                    if(gamePanel.bakujin.get(c).direction)
+                    {
+                        if(gamePanel.bakujin.get(c).xMovement < 3 && gamePanel.bakujin.get(c).xMovement > -1)
+                            gamePanel.bakujin.get(c).xMovement += 0.5;
+
+                        gamePanel.bakujin.get(c).startX += gamePanel.bakujin.get(c).xMovement;
+                    }
+                    else if(!gamePanel.bakujin.get(c).direction)
+                    {
+                        if(gamePanel.bakujin.get(c).xMovement > -3 && gamePanel.bakujin.get(c).xMovement < 1)
+                            gamePanel.bakujin.get(c).xMovement -= 0.5;
+
+                        gamePanel.bakujin.get(c).startX -= gamePanel.bakujin.get(c).xMovement;
+                    }
+                    gamePanel.bakujin.get(c).hitBox.x = gamePanel.bakujin.get(c).x;
+
+                    //System.out.println("Poe: " + gamePanel.bakujin.get(c).x);
+                }
+            }
+        }); bakujin_pace.start();
+    }
     void landTilesXCollisionCheck()
     {
         for(Land land: gamePanel.landTiles)
@@ -871,6 +960,26 @@ public class Ninja
                 hitBox.x -= xSpeed;
 
                 while(!tomoe.hitBox.intersects(hitBox))
+
+                    hitBox.x += Math.signum(xSpeed);
+                hitBox.x -= Math.signum(xSpeed);
+                gamePanel.cameraX += x - hitBox.x;
+                xSpeed = 0;
+                hitBox.x = x;
+
+                dyingAction();
+            }
+        }
+    }
+    void bakujinXCollisionCheck()
+    {
+        for(Bakujin bakujin: gamePanel.bakujin)
+        {
+            if(hitBox.intersects(bakujin.hitBox) && !key1stAttack && !key2ndAttack)
+            {
+                hitBox.x -= xSpeed;
+
+                while(!bakujin.hitBox.intersects(hitBox))
 
                     hitBox.x += Math.signum(xSpeed);
                 hitBox.x -= Math.signum(xSpeed);
@@ -1188,6 +1297,26 @@ public class Ninja
                 hitBox.y -= ySpeed;
 
                 while(!tomoe.hitBox.intersects(hitBox))
+
+                    hitBox.y += Math.signum(ySpeed);
+                hitBox.y -= Math.signum(ySpeed);
+                gamePanel.cameraX += y - hitBox.y;
+                ySpeed = 0;
+                y = hitBox.y;
+
+                dyingAction();
+            }
+        }
+    }
+    void bakujinYCollisionCheck()
+    {
+        for(Bakujin bakujin: gamePanel.bakujin)
+        {
+            if(hitBox.intersects(bakujin.hitBox) && !key1stAttack && !key2ndAttack)
+            {
+                hitBox.y -= ySpeed;
+
+                while(!bakujin.hitBox.intersects(hitBox))
 
                     hitBox.y += Math.signum(ySpeed);
                 hitBox.y -= Math.signum(ySpeed);

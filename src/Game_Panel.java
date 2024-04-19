@@ -37,7 +37,7 @@ public class Game_Panel extends JPanel
     ArrayList<Drop_Block> drop_blocks = new ArrayList<>();
     ArrayList<Bounce_Block> bounce_blocks = new ArrayList<>();
     ArrayList<Crate> crates = new ArrayList<>();
-    ArrayList<Box> boxes = new ArrayList<>();
+    static ArrayList<Box> boxes = new ArrayList<>();
     ArrayList<Random_Box> random_boxes = new ArrayList<>();
     ArrayList<Shrub> shrubs = new ArrayList<>();
     ArrayList<Television> televisions = new ArrayList<>();
@@ -102,6 +102,7 @@ public class Game_Panel extends JPanel
                     for(Ramen ramen1: ramen){ramen1.Set(cameraX);}
                     for(DirtyBubble dirtyBubble: dirtyBubbles){dirtyBubble.Set(cameraX);}
                     for(Tomoe tomoe: tomoes){tomoe.Set(cameraX); tomoe.collision();}
+                    for(Bakujin bakujin1: bakujin){bakujin1.Set(cameraX); bakujin1.collision();}
                     repaint();
                 }
             };
@@ -116,6 +117,7 @@ public class Game_Panel extends JPanel
                     ninja.dirtyBubbleMovement();
                     ninja.tomoeAnimation();
                     ninja.tomoeMovement();
+                    ninja.bakujinMovement();
                     repaint();
                 }
             }, 100L);
@@ -998,25 +1000,17 @@ public class Game_Panel extends JPanel
                 {
                     boxes.add(new Box(offset + x,375,50,50));
                 }
-                for(int x = 7150; x < 7300; x += (UNIT_SIZE*2))
-                {
-                    boxes.add(new Box(offset + x,325,50,50));
-                }
                 for(int x = 7200; x < 7300; x += (UNIT_SIZE*2))
-                {
-                    boxes.add(new Box(offset + x,275,50,50));
-                }
-                for(int y = 400; y < 500; y += (UNIT_SIZE*2))
-                {
-                    boxes.add(new Box(offset + 10500,y,50,50));
-                }
-                for(int x = 10625; x < 10725; x += (UNIT_SIZE*2))
                 {
                     boxes.add(new Box(offset + x,300,50,50));
                 }
                 for(int y = 400; y < 500; y += (UNIT_SIZE*2))
                 {
-                    boxes.add(new Box(offset + 10850,y,50,50));
+                    boxes.add(new Box(offset + 10500,y,50,50));
+                }
+                for(int y = 400; y < 500; y += (UNIT_SIZE*2))
+                {
+                    boxes.add(new Box(offset + 10900,y,50,50));
                 }
             }
             //Level 3
@@ -1044,8 +1038,7 @@ public class Game_Panel extends JPanel
             //Level 2
             case 2 ->
             {
-                random_boxes.add(new Random_Box(offset + 10675,175,50,50));
-                random_boxes.add(new Random_Box(offset + 10725,300,50,50));
+                random_boxes.add(new Random_Box(offset + 10775,300,50,50));
             }
             //Level 3
             case 3 ->{}
@@ -1173,7 +1166,7 @@ public class Game_Panel extends JPanel
             //Level 2
             case 2 ->
             {
-
+                bakujin.add(new Bakujin(offset + 10600,450,50,50));
             }
             //Level 3
             case 3 ->{}
@@ -1406,6 +1399,7 @@ public class Game_Panel extends JPanel
         for(Ramen ramen1: ramen){ramen1.draw(g2D);}
         for(DirtyBubble dirtyBubble: dirtyBubbles){dirtyBubble.drawBubble(g2D);}
         for(Tomoe tomoe: tomoes){tomoe.drawBubble(g2D);}
+        for(Bakujin bakujin1: bakujin){bakujin1.drawBubble(g2D);}
         Game_Panel.ninja.draw(g2D);
         for(Game_Over game_over: game_overs){game_over.draw(g2D);}
         for(Times_Up times_up: times_ups){times_up.draw(g2D);}
@@ -1481,6 +1475,7 @@ public class Game_Panel extends JPanel
             random_boxes.clear();
             dirtyBubbles.clear();
             tomoes.clear();
+            bakujin.clear();
             //Reset objects and enemies.
             makeBackground(offset);
             makeOcean();
@@ -1507,6 +1502,7 @@ public class Game_Panel extends JPanel
             makeRandoBox(offset);
             makeDirtyBubble(offset);
             makeTomoe(offset);
+            makeBakujin(offset);
             soundtracks();
 
             Game_Panel.playerLife.life--;
