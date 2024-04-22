@@ -7,7 +7,7 @@ import java.util.TimerTask;
 
 public class Ninja
 {
-    boolean keyForwards = true, keyBackwards, keyLeft, keyRight, key2ndAttack, key1stAttack, keyJump, keyDead, keyCamera, keyBlueCloud, keyTomoeDead, keyDirtyBubble, keyBakujin;
+    boolean keyForwards = true, keyBackwards, keyLeft, keyRight, key3rdAttack, key2ndAttack, key1stAttack, keyJump, keyDead, keyCamera, keyBlueCloud, keyTomoeDead, keyDirtyBubble, keyBakujin;
     Image murasaki = new ImageIcon("images/kuroimaru san.png").getImage();
     Image murasaki_dead = new ImageIcon("images/kuroimaru san dead.png").getImage();
     Image murasaki_running = new ImageIcon("images/kuroimaru san running.png").getImage();
@@ -894,6 +894,16 @@ public class Ninja
                 }
             }
         }); bakujin_pace.start();
+    }
+    void FireballJutsu()
+    {
+        javax.swing.Timer blastRate = new javax.swing.Timer(15, new ActionListener()
+        {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+
+            }
+        });
     }
     void landTilesXCollisionCheck()
     {

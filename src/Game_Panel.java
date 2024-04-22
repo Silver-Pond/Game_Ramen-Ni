@@ -45,6 +45,7 @@ public class Game_Panel extends JPanel
     ArrayList<Palm_Tree> palm_trees = new ArrayList<>();
     ArrayList<Tori> toris = new ArrayList<>();
     ArrayList<Sign> signs = new ArrayList<>();
+    ArrayList<Fireball> fireballs = new ArrayList<>();
 
     Game_Panel()
     {
@@ -103,6 +104,7 @@ public class Game_Panel extends JPanel
                     for(DirtyBubble dirtyBubble: dirtyBubbles){dirtyBubble.Set(cameraX);}
                     for(Tomoe tomoe: tomoes){tomoe.Set(cameraX); tomoe.collision();}
                     for(Bakujin bakujin1: bakujin){bakujin1.Set(cameraX); bakujin1.collision();}
+                    for(Fireball fireball: fireballs){fireball.Set(cameraX);}
                     repaint();
                 }
             };
@@ -1159,7 +1161,7 @@ public class Game_Panel extends JPanel
             case 7 ->{}
         }
     }
-    protected  void makeBakujin(int offset)
+    protected void makeBakujin(int offset)
     {
         switch (level)
         {
@@ -1279,6 +1281,10 @@ public class Game_Panel extends JPanel
             //Level 7
             case 7 ->{}
         }
+    }
+    protected void makeFireball(int offset, Ninja ninja)
+    {
+
     }
     protected void makeRamenIcon()
     {
@@ -1400,6 +1406,7 @@ public class Game_Panel extends JPanel
         for(DirtyBubble dirtyBubble: dirtyBubbles){dirtyBubble.drawBubble(g2D);}
         for(Tomoe tomoe: tomoes){tomoe.drawBubble(g2D);}
         for(Bakujin bakujin1: bakujin){bakujin1.drawBubble(g2D);}
+        for(Fireball fireball: fireballs){fireball.drawProjectile(g2D);}
         Game_Panel.ninja.draw(g2D);
         for(Game_Over game_over: game_overs){game_over.draw(g2D);}
         for(Times_Up times_up: times_ups){times_up.draw(g2D);}
@@ -1503,6 +1510,7 @@ public class Game_Panel extends JPanel
             makeDirtyBubble(offset);
             makeTomoe(offset);
             makeBakujin(offset);
+            makeFireball(offset,ninja);
             soundtracks();
 
             Game_Panel.playerLife.life--;
@@ -1574,7 +1582,7 @@ public class Game_Panel extends JPanel
         {
             ninja.key1stAttack = true;
 
-            TimerTask attack3 = new TimerTask()
+            TimerTask attack1 = new TimerTask()
             {
                 @Override
                 public void run()
@@ -1583,6 +1591,21 @@ public class Game_Panel extends JPanel
                 }
             };
             long delay = 250L;
+            timer.schedule(attack1,delay);
+        }
+        if(e.getKeyChar() == '8' && !Start_Panel.paused && !ninja.keyDead)
+        {
+            ninja.key3rdAttack = true;
+
+            TimerTask attack3 = new TimerTask()
+            {
+                @Override
+                public void run()
+                {
+                    ninja.key3rdAttack = false;
+                }
+            };
+            long delay = 350L;
             timer.schedule(attack3,delay);
         }
         if(e.getKeyChar() == '\n' && !ninja.keyDead)
@@ -1619,5 +1642,6 @@ public class Game_Panel extends JPanel
         if(e.getKeyChar() == '2'){ninja.keyJump = false;}
         if(e.getKeyChar() == '6'){ninja.key2ndAttack = false;}
         if(e.getKeyChar() == '4'){ninja.key1stAttack = false;}
+        if(e.getKeyChar() == '8'){ninja.key3rdAttack = false;}
     }
 }

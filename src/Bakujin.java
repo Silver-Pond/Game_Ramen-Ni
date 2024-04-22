@@ -31,8 +31,11 @@ public class Bakujin extends Enemies
         falling = true;
         //Calling x collision check methods
         xBoxCollisionCheck();
+        xLandCollisionCheck();
+        xRegBlockCollisionCheck();
         //Calling y collision check methods
         yLandCollisionCheck();
+        yRegBlockCollisionCheck();
         //falling and fall prevention code
         if(falling)
         {
@@ -57,6 +60,32 @@ public class Bakujin extends Enemies
             }
         }
     }
+    private void xLandCollisionCheck()
+    {
+        for(Land land: Game_Panel.landTiles)
+        {
+            if(hitBox.intersects(land.hitBox))
+            {
+                if(!direction)
+                    direction = true;
+                else
+                    direction = false;
+            }
+        }
+    }
+    private void xRegBlockCollisionCheck()
+    {
+        for(Normal_Block normal_block: Game_Panel.normal_blocks)
+        {
+            if(hitBox.intersects(normal_block.hitBox))
+            {
+                if(!direction)
+                    direction = true;
+                else
+                    direction = false;
+            }
+        }
+    }
     private void yLandCollisionCheck()
     {
         for(Land land: Game_Panel.landTiles)
@@ -67,6 +96,21 @@ public class Bakujin extends Enemies
                 {
                     falling = false;
                     hitBox.y = land.y - (land.height*2);
+                }
+            }
+            y = hitBox.y;
+        }
+    }
+    private void yRegBlockCollisionCheck()
+    {
+        for(Normal_Block normal_block: Game_Panel.normal_blocks)
+        {
+            if(hitBox.intersects(normal_block.hitBox))
+            {
+                if(yMovement > 0)
+                {
+                    falling = false;
+                    hitBox.y = normal_block.y - (normal_block.height*2);
                 }
             }
             y = hitBox.y;
